@@ -16,19 +16,19 @@ function validate(validatableInput: Validatable): boolean {
   }
 
   if(validatableInput.minLength != null && typeof validatableInput.value === 'string') {
-    isValid = isValid && validatableInput.value.length > validatableInput.minLength;
+    isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
   }
 
   if(validatableInput.maxLength != null && typeof validatableInput.value === 'string') {
-    isValid = isValid && validatableInput.value.length < validatableInput.maxLength; 
+    isValid = isValid && validatableInput.value.length <= validatableInput.maxLength; 
   }
 
   if(validatableInput.min != null && typeof validatableInput.value === 'number') {
-    isValid = isValid && validatableInput.value > validatableInput.min; 
+    isValid = isValid && validatableInput.value >= validatableInput.min; 
   }
 
   if(validatableInput.max != null && typeof validatableInput.value === 'number') {
-    isValid = isValid && validatableInput.value < validatableInput.max; 
+    isValid = isValid && validatableInput.value <= validatableInput.max; 
   }
 
   return isValid; 
@@ -86,8 +86,29 @@ class ProjectInput {
     const description = this.descInputElm.value;
     const peopleNum = this.peopleNumInputElm.value; 
 
+    // construct its interface (reuse the interface above)
+    const titleValidatable: Validatable = {
+      value: title,
+      required: true
+    };
+    const descriptionValidatable: Validatable = {
+      value: description,
+      required: true,
+      minLength: 4
+    };
+    const peopleNumValidatable: Validatable = {
+      value: +peopleNum,
+      required: true,
+      min:1,
+      max:6
+    };
+
     // validate the value
-    if(title.trim().length === 0 || description.trim().length === 0 || peopleNum.trim().length === 0) {
+    if(
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleNumValidatable)
+    ) {
       alert('Invalid input, please try again');
     } else {
       return [title, description, +peopleNum]; 
@@ -106,7 +127,6 @@ class ProjectInput {
 
     if(Array.isArray(userInput)) {
       const [title, description, peopleNum] = userInput;
-      console.log('🚀 ~ file: app.ts ~ line 67 ~ ProjectInput ~ submitHandler ~ title, description, peopleNum', title, description, peopleNum)
       this.resetInputForm();
     }
   }
