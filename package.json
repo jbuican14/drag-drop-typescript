@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "tsc": "^2.0.4"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  },
+  "name": "drag_and_drop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
