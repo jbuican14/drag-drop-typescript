@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 body {
@@ -38,8 +40,8 @@ textarea:focus {
 
 button {
   font: inherit;
-  background: #ff0062;
-  border: 1px solid #ff0062;
+  background: #72dad8;
+  border: 1px solid #ff006211;
   cursor: pointer;
   color: white;
   padding: 0.75rem 1rem;
@@ -51,17 +53,19 @@ button:focus {
 
 button:hover,
 button:active {
-  background: #a80041;
-  border-color: #a80041;
+  background: darker(#72dad8);
+  border-color: darker(#72dad8);
 }
 
 .projects {
   margin: 1rem;
-  border: 1px solid #ff0062;
+  border: 1px solid #131515;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .projects header {
-  background: #ff0062;
+  background: #6aa62e;
   height: 3.5rem;
   display: flex;
   justify-content: center;
@@ -69,16 +73,16 @@ button:active {
 }
 
 #finished-projects {
-  border-color: #0044ff;
+  border-color: #01151d;
 }
 
 #finished-projects header {
-  background: #0044ff;
+  background: #135b7d;
 }
 
 .projects h2 {
   margin: 0;
-  color: white;
+  color: rgb(247, 240, 240);
 }
 
 .projects ul {
@@ -94,12 +98,12 @@ button:active {
 }
 
 .projects li h2 {
-  color: #ff0062;
+  color: #37b5ac;
   margin: 0.5rem 0;
 }
 
 #finished-projects li h2 {
-  color: #0044ff;
+  color: #033741;
 }
 
 .projects li h3 {
@@ -122,6 +126,6 @@ button:active {
 #user-input {
   margin: 1rem;
   padding: 1rem;
-  border: 1px solid #ff0062;
+  border: 1px solid #05294e;
   background: #f7f7f7;
 }

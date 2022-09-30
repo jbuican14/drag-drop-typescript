@@ -50,6 +50,35 @@ function autobind(
   }
 } 
 
+// PROJECT LIST CLASS
+class ProjectList {
+  templateElm: HTMLTemplateElement;
+  hostElm: HTMLDivElement; 
+  element: HTMLElement;
+
+  constructor(private type:'active' | 'finished') {
+    this.templateElm = document.getElementById('project-list')! as HTMLTemplateElement;
+    this.hostElm = document.getElementById('app')! as HTMLDivElement;
+
+    const importedNode = document.importNode(this.templateElm.content, true); 
+    this.element = importedNode.firstElementChild as HTMLElement; 
+    this.element.id = `${this.type}-projects`;
+    this.attach(); 
+    this.renderContent(); 
+  }
+
+  private renderContent(){
+    const listId = `${this.type}-project-list`;
+    this.element.querySelector('ul')!.id = listId;
+    this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS'; 
+  }
+
+  private attach() {
+    this.hostElm.insertAdjacentElement('beforeend', this.element); 
+  }
+}
+
+// PROJECT INPUT CLASS
 class ProjectInput {
   templateElm: HTMLTemplateElement;
   hostElm: HTMLDivElement;
@@ -148,3 +177,5 @@ class ProjectInput {
 }
 
 const projectInputOne = new ProjectInput(); 
+const activeProjectList_demo = new ProjectList('active');
+const finishedProjectList_demo = new ProjectList('finished');
