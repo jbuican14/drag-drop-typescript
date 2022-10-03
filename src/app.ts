@@ -1,8 +1,16 @@
+// PROJECT TYPE
+// using class because the need to instanciate this 
+enum ProjectStatus { Active, Finished}
+class Project {
+  constructor(public id: string, public title: string, public description: string, public people:number, public status: ProjectStatus ) {
+
+  }
+}
+
 // PROJECT STATE MANAGEMENT
 class ProjectState {
   private listeners: any[] = []; // create a subscription -- array of listeners
-  // TODO need to fix any type
-  private projects: any[] = [];
+  private projects: Project[] = [];
   private static instance: ProjectState;
 
   private constructor() {}
@@ -20,12 +28,8 @@ class ProjectState {
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
-      title: title,
-      description: description,
-      people: numOfPeople
-    };
+    const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active)
+    
     this.projects.push(newProject); 
 
     for(const listenerFunction of this.listeners) {
@@ -93,7 +97,7 @@ class ProjectList {
   templateElm: HTMLTemplateElement;
   hostElm: HTMLDivElement; 
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
 
   constructor(private type:'active' | 'finished') {
     this.templateElm = document.getElementById('project-list')! as HTMLTemplateElement;
