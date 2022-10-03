@@ -8,8 +8,9 @@ class Project {
 }
 
 // PROJECT STATE MANAGEMENT
+type Listener = (items: Project[]) => void;
 class ProjectState {
-  private listeners: any[] = []; // create a subscription -- array of listeners
+  private listeners: Listener[] = []; // create a subscription -- array of listeners
   private projects: Project[] = [];
   private static instance: ProjectState;
 
@@ -23,7 +24,7 @@ class ProjectState {
     return this.instance; 
   }
 
-  addListener(listenerFunction: Function) {
+  addListener(listenerFunction: Listener) {
     this.listeners.push(listenerFunction);
   }
 
@@ -86,10 +87,11 @@ function autobind(
   const adjustDescriptor: PropertyDescriptor = {
     configurable: true,
     get() {
-      const boundFunction = originalMethod.bine(this);
+      const boundFunction = originalMethod.bind(this);
       return boundFunction; 
     }
-  }
+  };
+  return adjustDescriptor; 
 } 
 
 // PROJECT LIST CLASS
@@ -108,7 +110,7 @@ class ProjectList {
     this.element.id = `${this.type}-projects`;
     this.assignedProjects = []; 
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects(); 
     });
@@ -164,10 +166,9 @@ class ProjectInput {
     this.init();
   }
 
-  @autobind
   private init() {
     // this.element.addEventListener('submit', this.submitHandler.bind(this));  or use decorator
-    this.element.addEventListener('submit', this.submitHandler.bind(this)); 
+    this.element.addEventListener('submit', this.submitHandler); 
   }
 
   private getAllUserInput(): [string, string, number] | void {
@@ -210,6 +211,7 @@ class ProjectInput {
     this.peopleNumInputElm.value = ''; 
   }
   
+  @autobind
   private submitHandler(evt: Event) {
     evt.preventDefault(); 
     const userInput = this.getAllUserInput();
