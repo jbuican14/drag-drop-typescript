@@ -1,3 +1,41 @@
+// PROJECT STATE MANAGEMENT
+class ProjectState {
+  private listeners: any[] = []; // create a subscription -- array of listeners
+  // TODO need to fix any type
+  private projects: any[] = [];
+  private static instance: ProjectState;
+
+  private constructor() {}
+
+  static getInstance(){
+    if(this.instance) 
+      return this.instance;
+    
+    this.instance = new ProjectState();
+    return this.instance; 
+  }
+
+  addListener(listenerFunction: Function) {
+    this.listeners.push(listenerFunction);
+  }
+
+  addProject(title: string, description: string, numOfPeople: number) {
+    const newProject = {
+      id: Math.random().toString(),
+      title: title,
+      description: description,
+      people: numOfPeople
+    };
+    this.projects.push(newProject); 
+
+    for(const listenerFunction of this.listeners) {
+      listenerFunction(this.projects.slice());
+    }
+  }
+}
+
+const projectState = ProjectState.getInstance(); 
+
 // VALIDATION
 interface Validatable {
   value: string | number;
@@ -55,6 +93,7 @@ class ProjectList {
   templateElm: HTMLTemplateElement;
   hostElm: HTMLDivElement; 
   element: HTMLElement;
+  assignedProjects: any[];
 
   constructor(private type:'active' | 'finished') {
     this.templateElm = document.getElementById('project-list')! as HTMLTemplateElement;
@@ -63,8 +102,25 @@ class ProjectList {
     const importedNode = document.importNode(this.templateElm.content, true); 
     this.element = importedNode.firstElementChild as HTMLElement; 
     this.element.id = `${this.type}-projects`;
+    this.assignedProjects = []; 
+
+    projectState.addListener((projects: any[]) => {
+      this.assignedProjects = projects;
+      this.renderProjects(); 
+    });
+
     this.attach(); 
     this.renderContent(); 
+  }
+
+  private renderProjects() {
+    const listElm = document.getElementById(`${this.type}-project-list`);
+    
+    for(const projectItem of this.assignedProjects) {
+      const listItem = document.createElement('li');
+      listItem.textContent = projectItem.title;
+      listElm?.appendChild(listItem);
+    }
   }
 
   private renderContent(){
@@ -156,6 +212,7 @@ class ProjectInput {
 
     if(Array.isArray(userInput)) {
       const [title, description, peopleNum] = userInput;
+      projectState.addProject(title, description, peopleNum);
       this.resetInputForm();
     }
   }
