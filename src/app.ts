@@ -207,24 +207,15 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 }
 
 // PROJECT INPUT CLASS
-class ProjectInput {
-  templateElm: HTMLTemplateElement;
-  hostElm: HTMLDivElement;
-  element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElm: HTMLInputElement;
   descInputElm: HTMLInputElement;
   peopleNumInputElm: HTMLInputElement;
 
   constructor() {
+    super("project-input", "app", false, "user-input");
     this.configure();
-    this.templateElm = document.getElementById(
-      "project-input"
-    )! as HTMLTemplateElement;
-    this.hostElm = document.getElementById("app")! as HTMLDivElement;
-
-    const importedNode = document.importNode(this.templateElm.content, true);
-    this.element = importedNode.firstElementChild as HTMLFormElement;
-    this.element.id = "user-input";
+    this.renderContent();
 
     this.titleInputElm = this.element.querySelector(
       "#title"
@@ -235,15 +226,9 @@ class ProjectInput {
     this.peopleNumInputElm = this.element.querySelector(
       "#people-num"
     ) as HTMLInputElement;
-
-    this.attach();
-    this.init();
   }
 
-  private init() {
-    // this.element.addEventListener('submit', this.submitHandler.bind(this));  or use decorator
-    this.element.addEventListener("submit", this.submitHandler);
-  }
+  renderContent(): void {}
 
   private getAllUserInput(): [string, string, number] | void {
     const title = this.titleInputElm.value;
@@ -297,10 +282,8 @@ class ProjectInput {
     }
   }
 
-  private configure() {}
-
-  private attach() {
-    this.hostElm.insertAdjacentElement("afterbegin", this.element);
+  configure() {
+    this.element.addEventListener("submit", this.submitHandler);
   }
 }
 
