@@ -111,7 +111,14 @@ class ProjectList {
     this.assignedProjects = []; 
 
     projectState.addListener((projects: Project[]) => {
-      this.assignedProjects = projects;
+      const relevantProjects = projects.filter(project => {
+        if(this.type === 'active') {
+          return project.status === ProjectStatus.Active;
+        }else {
+          return project.status === ProjectStatus.Finished;
+        }
+      })
+      this.assignedProjects = relevantProjects;
       this.renderProjects(); 
     });
 
@@ -120,8 +127,10 @@ class ProjectList {
   }
 
   private renderProjects() {
-    const listElm = document.getElementById(`${this.type}-project-list`);
+    const listElm = document.getElementById(`${this.type}-project-list`)! as HTMLUListElement;
     
+    // performance issue but small project is fine. 
+    listElm.innerHTML = ''; 
     for(const projectItem of this.assignedProjects) {
       const listItem = document.createElement('li');
       listItem.textContent = projectItem.title;
@@ -223,16 +232,7 @@ class ProjectInput {
     }
   }
 
-  private configure() {
-    // this.templateElm = document.getElementById('project-input')! as HTMLTemplateElement;
-    // this.hostElm = document.getElementById('app')! as HTMLDivElement;
-    
-    // const importedNode = document.importNode(this.templateElm.content, true); 
-    // this.element = importedNode.firstElementChild as HTMLFormElement;
-    // this.element.id = 'user-input'; 
-
-    // this.titleInputElm
-  }
+  private configure() {}
 
   private attach() {
     this.hostElm.insertAdjacentElement('afterbegin', this.element); 
