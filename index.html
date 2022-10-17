@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>ProjectManager || Typescript (tsc --watch)</title>
+    <title>ProjectManager</title>
     <link rel="stylesheet" href="app.css" />
     <script src="dist/app.js" defer></script>
   </head>
@@ -21,13 +21,17 @@
         </div>
         <div class="form-control">
           <label for="people">People</label>
-          <input type="number" id="people-num" step="1" min="0" max="10" />
+          <input type="people-num" id="people-num" step="1" min="0" max="10" />
         </div>
         <button type="submit">ADD PROJECT</button>
       </form>
     </template>
     <template id="single-project">
-      <li></li>
+      <li>
+        <h2></h2>
+        <h3></h3>
+        <p></p>
+      </li>
     </template>
     <template id="project-list">
       <section class="projects">
