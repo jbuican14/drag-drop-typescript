@@ -1,4 +1,8 @@
 /// <reference path="base.component.ts" />
+/// <reference path="../decorators/autobind-decorator.ts" />
+/// <reference path="../state/project-state.ts" />
+/// <reference path="../models/project-model.ts" />
+/// <reference path="../models/drag-drop-interfaces.ts" />
 
 namespace App {
     // PROJECT LIST CLASS
@@ -24,7 +28,6 @@ namespace App {
   
       @autobind
       dropHandler(event: DragEvent): void {
-        console.log('🚀 ~ file: app.ts ~ line 235 ~ ProjectList ~ dropHandler ~ event');  const projId = event.dataTransfer!.getData('text/plain');
         projectState.moveProject(projId, this.type === 'active'? ProjectStatus.Active: ProjectStatus.Finished); 
   
   
