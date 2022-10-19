@@ -28,6 +28,7 @@ namespace App {
   
       @autobind
       dropHandler(event: DragEvent): void {
+        const projId = event.dataTransfer!.getData('text/plain');
         projectState.moveProject(projId, this.type === 'active'? ProjectStatus.Active: ProjectStatus.Finished); 
   
   
