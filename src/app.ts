@@ -1,16 +1,7 @@
-/// <reference path="models/drag-drop-interfaces.ts" />
-/// <reference path="models/project-model.ts" />
-/// <reference path="state/project-state.ts" />
-/// <reference path="util/validation.ts" />
-/// <reference path="decorators/autobind-decorator.ts" />
-/// <reference path="components/base.component.ts" />
-/// <reference path="components/project-item.component.ts" />
-/// <reference path="components/project-list.component.ts" />
-/// <reference path="components/project-input.component.ts" />
 
-namespace App {
+import { ProjectInput } from './components/project-input.component.js';
+import { ProjectList } from './components/project-list.component.js';
 
-  const projectInputOne = new ProjectInput();
-  const activeProjectList_demo = new ProjectList("active");
-  const finishedProjectList_demo = new ProjectList("finished");
-}
+new ProjectInput();
+new ProjectList("active");
+new ProjectList("finished");
