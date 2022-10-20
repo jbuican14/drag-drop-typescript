@@ -8,12 +8,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: 'dist'
   },
-  // devServer: {
-  //   static: {
-  //     directory: path.join(__dirname, 'dist'),
-  //   },
-  //   port: 9000,
-  // },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 9000,
+  },
   devtool: 'inline-source-map',
   module: {
     rules: [
